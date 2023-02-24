@@ -1,4 +1,4 @@
-import { Card, Grid, Stack } from "@mui/material";
+import { Card, Grid, Stack, Typography } from "@mui/material";
 import { Container} from "@mui/system";
 import ProductsCarousel from "./components/ProductsCarousel";
 import ProductDetails from "./components/ProductDetails";
@@ -65,6 +65,7 @@ const exampleProduct: Product = {
 function App() {
   return (
     <Container sx={{mt: 7}}>
+      <Typography variant="h6" sx={{fontWeight: 700, mb: 3}} >Product page </Typography>
       <Card sx={{p: {md: 1, lg: 3 }}}>
         <Grid container>
           <Grid item xs={12} md={6} lg={7}>
@@ -77,6 +78,9 @@ function App() {
           </Grid>
         </Grid>
       </Card>
+      <Typography variant="body2" sx={{fontWeight: 500, my: 2, textAlign: 'right'}} >
+        created by <a href="https://github.com/Ahbari-M">Ahbari Mohammed</a>
+       </Typography>
     </Container>
   );
 }
