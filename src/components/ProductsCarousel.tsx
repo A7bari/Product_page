@@ -1,4 +1,4 @@
-import { alpha, Box, Card, CardMedia, Grid, Stack } from '@mui/material'
+import {  Box, CardMedia, Stack } from '@mui/material'
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -13,23 +13,36 @@ interface Props {
 }
 
 const CarouselContainer = styled(Box)(() => ({
-   '&:before, &:after': {
-      left: 0,
-      zIndex: 9,
+   position: 'relative',
+   '&:before': {
+      left: -.5,
+      zIndex: 50,
       content: "''",
-      height: '10%',
+      height: '100%',
       position: 'absolute',
-      width: '100%',
-      background: `linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%);`,
+      width: '12%',
+      background: `linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%);`,
     },
-    '&:after': { bottom: -0.5, transform: 'scaleY(-1)' },
+    '&:after': { 
+      right: -.5,
+      top: 0,
+      zIndex: 50,
+      content: "''",
+      height: '100%',
+      position: 'absolute',
+      width: '12%',
+      background: `linear-gradient(270deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%);`,
+     },
  }));
 
 function ProductsCarousel({images}: Props) {
    const mainSlider= useRef(null);
    const NavSlider= useRef(null);
+
+   // taken from https://react-slick.neostack.com/docs/example/as-nav-for
    const [nav1, setNav1] = useState();
    const [nav2, setNav2] = useState();
+
    const [currentIndex, setCurrentIndex] = useState(0);
 
    useEffect(() => {
@@ -41,6 +54,7 @@ function ProductsCarousel({images}: Props) {
    
 
    const settings = {
+      className: "center",
       dots: false,
       arrows: false,
       draggable: false,
@@ -56,89 +70,81 @@ function ProductsCarousel({images}: Props) {
       arrows: false,
       centerMode: true,
       focusOnSelect: true,
-      centerPadding: '0px',
       slidesToShow: 3,
-      vertical: true,
-      verticalSwiping: true,
+      swipeToSlide: true,
+      variableWidth: true,
     };
 
   return (
-   <Grid container spacing={1}>
-      <Grid 
-         item 
-         xs={2} 
-      >
-         <Stack height={'100%'}  justifyContent='center'>
-         <Box
-         sx={{
-            mt: 3,
-            ...(images.length < 5 && {maxHeight: (images.length+1)* NAV_IMG }) ,  
-            ...(images.length >= 5 && {maxHeight: 6*NAV_IMG }) , 
-            position: 'relative'
-         }}
-         >
-         <CarouselContainer >
-            <Slider ref={NavSlider} {...Navsettings} asNavFor={nav1} >
+      <Stack>
+
+         <Box sx={{mr: {md: 0, lg: 3}, my: 3, position: 'relative' }}>
+            <Slider ref={mainSlider} asNavFor={nav2} {...settings} >
                {images.map((img, i) => (
                   <Box
                      key={i}
                      component='div'
-                     sx={{py:.5}}
                   >
-                     <Box
-                        sx={{
-                           mx: 'auto',
-                           my: 'auto',
-                           height: NAV_IMG,
-                           width: NAV_IMG,
-                           border: '1px solid #f0f0f0',
-                           ...(currentIndex==i && {                     
-                              border: '1px solid #22c1c3',
-                              transform: 'scale(1.1)',
-                              transition: (theme) =>
-                              theme.transitions.create('all', {
-                                 duration: 170,
-                              }),
-                           }),
-                           overflow: 'hidden',  
-                           borderRadius: 3,
-                        }}>
                         <CardMedia
                            component="img"
-                           height={NAV_IMG}
+                           height={MAIN_IMG}
                            image={img}
+                           sx={{
+                              borderRadius: 4,
+                           }}
                         />
-                     </Box>
                   </Box>
                ))}
             </Slider>
-         </CarouselContainer>
          </Box>
-         </Stack>
-      </Grid>
-      <Grid item xs={10}>
-         <Box sx={{mr: 3, my: 3, position: 'relative',   }}>
-               <Slider ref={mainSlider} asNavFor={nav2} {...settings} >
+
+         <Box
+         sx={{
+            mx: 'auto' ,
+            mb: 4,
+            ...(images.length < 5 && {maxWidth: (images.length+1)* NAV_IMG }) ,  
+            ...(images.length >= 5 && {maxWidth: 5*NAV_IMG }) , 
+            position: 'relative'
+         }}
+         >
+            <CarouselContainer >
+               <Slider ref={NavSlider} {...Navsettings} asNavFor={nav1} >
                   {images.map((img, i) => (
                      <Box
                         key={i}
                         component='div'
+                        sx={{py:.5}}
                      >
+                        <Box
+                           sx={{
+                              mx: 1,
+                              my: 'auto',
+                              height: NAV_IMG,
+                              width: NAV_IMG,
+                              border: '1px solid #f0f0f0',
+                              ...(currentIndex==i && {                     
+                                 border: '1px solid #22c1c3',
+                                 transform: 'scale(1.1)',
+                                 transition: (theme) =>
+                                 theme.transitions.create('all', {
+                                    duration: 170,
+                                 }),
+                              }),
+                              overflow: 'hidden',  
+                              borderRadius: 3,
+                           }}>
                            <CardMedia
                               component="img"
-                              height={MAIN_IMG}
+                              height={NAV_IMG}
                               image={img}
-                              sx={{
-                                 borderRadius: 4,
-                              }}
                            />
-
+                        </Box>
                      </Box>
                   ))}
                </Slider>
-         </Box>
-      </Grid>
-   </Grid>
+            </CarouselContainer>
+         </Box> 
+      </Stack>
   )
 }
 
