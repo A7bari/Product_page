@@ -65,7 +65,7 @@ const exampleProduct: Product = {
 function App() {
   return (
     <Container sx={{mt: 7}}>
-      <Card sx={{p: 3}}>
+      <Card sx={{p: {md: 1, lg: 3 }}}>
         <Grid container>
           <Grid item xs={12} md={6} lg={7}>
             <Stack height={'100%'}  justifyContent='center'> 

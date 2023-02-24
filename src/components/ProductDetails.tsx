@@ -60,7 +60,6 @@ function ProductDetails({product }: Props) {
 
      <RadioGroup row >
        {colors.map((color) => {
-
          return (
            <Radio
              key={color}
@@ -77,7 +76,6 @@ function ProductDetails({product }: Props) {
                    borderColor: 'background.default'
                  }}
                />
-               
              }
              checkedIcon={
                <Box
@@ -94,7 +92,6 @@ function ProductDetails({product }: Props) {
                      }),
                  }}
                />
-              
              }
              sx={{
                color,
@@ -112,7 +109,6 @@ function ProductDetails({product }: Props) {
      </Typography>
      <RadioGroup row >
        {sizes.map((size) => {
-
          return (
            <Radio
              key={size}
