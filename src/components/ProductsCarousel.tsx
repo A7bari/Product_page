@@ -52,7 +52,6 @@ function ProductsCarousel({images}: Props) {
        }
    }, [])
    
-
    const settings = {
       className: "center",
       dots: false,
@@ -91,6 +90,7 @@ function ProductsCarousel({images}: Props) {
                            image={img}
                            sx={{
                               borderRadius: 4,
+                              cursor: 'pointer'
                            }}
                         />
                   </Box>
@@ -101,7 +101,6 @@ function ProductsCarousel({images}: Props) {
          <Box
          sx={{
             mx: 'auto' ,
-            mb: 4,
             ...(images.length < 5 && {maxWidth: (images.length+1)* NAV_IMG }) ,  
             ...(images.length >= 5 && {maxWidth: 5*NAV_IMG }) , 
             position: 'relative'
@@ -132,6 +131,7 @@ function ProductsCarousel({images}: Props) {
                               }),
                               overflow: 'hidden',  
                               borderRadius: 3,
+                              cursor: 'pointer'
                            }}>
                            <CardMedia
                               component="img"
